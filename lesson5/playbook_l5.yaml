@@ -1,0 +1,44 @@
+- name: "lesson 4"
+  hosts: webservers
+  gather_facts: no  
+  tasks: 
+    - name: update manager cache
+      remote_user: root
+      ansible.builtin.apt:
+        update_cache: yes
+      tags: [cache]
+    - name: intall git
+      remote_user: root
+      tags: [installation, git]
+      ansible.builtin.apt:
+        name: git
+        state: present
+    - name: intall make
+      remote_user: root
+      tags: [installation, make]
+      ansible.builtin.apt:
+        name: make
+        state: present
+    - name: intall node.js
+      remote_user: root
+      tags: [installation, node.js]
+      ansible.builtin.apt:
+        name: nodejs
+        state: present
+    - name: create arya user
+      remote_user: root
+      tags: [user]
+      ansible.builtin.user: 
+        name: arya
+    - name: create sansa user
+      remote_user: root
+      tags: [user]
+      ansible.builtin.user:
+        name: sansa
+    - name: create tirion user
+      remote_user: root
+      tags: [user]
+      ansible.builtin.user:    
+        name: tirion
+
+    
