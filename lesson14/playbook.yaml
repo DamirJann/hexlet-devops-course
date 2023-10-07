@@ -1,0 +1,11 @@
+- hosts: appservers, webservers
+  remote_user: root
+  vars: 
+    playbook_paths: ["./user_playbook.yaml", "git_playbook.yaml"] 
+  tasks:  
+    - name: set up server
+      ansible.builtin.include_tasks:
+        file: "{{ item }}" 
+      loop: "{{ playbook_paths }}"
+      vars: 
+        usernames: ["john", "alfred", "freud"] 

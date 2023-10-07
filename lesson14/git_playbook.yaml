@@ -1,0 +1,13 @@
+- name: install git
+  tags: "git"
+  ansible.builtin.import_tasks:
+    file: package_install_playbook.yaml  
+  vars: 
+    package_name: "git"      
+- name: set git config 
+  remote_user: root
+  tags: ["git"]
+  ansible.builtin.template:
+    src:  ./.gitconfig
+    dest: "/home/{{ item }}/.gitconfig"
+  loop: "{{ usernames }}"
