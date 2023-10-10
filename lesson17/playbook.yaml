@@ -1,0 +1,17 @@
+- hosts: webservers 
+  remote_user: root
+  roles:
+    - role: git
+      remote_user: root
+      vars: 
+        version: 1.1.0
+        usernames: ["postgres"]
+    - role:  geerlingguy.postgresql 
+      remote_user: root
+      no_log: true
+      vars:
+        postgres_users_no_log: false
+        version: 3.5.0
+        postgresql_users: 
+          - name: postgres
+            password: "{{ root_password }}"
