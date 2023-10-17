@@ -1,0 +1,33 @@
+- hosts: appservers
+  remote_user: root
+  tasks:
+    - name: install nginx
+      remote_user: root
+      ansible.builtin.yum:
+        name: nginx
+        state: latest
+      become: yes
+    - name: update index.html  
+      remote_user: root
+      tags: ["nginx config"]  
+      ansible.builtin.template:
+        src: ./index.html
+        dest: /usr/share/nginx/html/index.html
+      notify:
+        - restart nginx
+    - name: update nginx.conf
+      remote_user: root
+      tags: ["nginx config"]
+      ansible.builtin.template:
+        src: ./nginx.conf
+        dest: /etc/nginx/nginx.conf
+      notify:
+        - restart nginx
+
+  handlers:
+    - name: restart nginx
+      remote_user: root
+      ansible.builtin.service:
+        name: nginx
+        state: reloaded
+      become: yes

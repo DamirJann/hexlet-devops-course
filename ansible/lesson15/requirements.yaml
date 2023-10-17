@@ -1,0 +1,4 @@
+roles: 
+  - name: geerlingguy.postgresql
+    postgresql_user: damire
+    postgresql_group: damire

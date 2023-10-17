@@ -1,0 +1,74 @@
+---
+
+- hosts: localhost
+
+  vars:
+    base_config_path: /tmp/.env
+    confd_path: /tmp/env.d
+    root_path: "/opt/"
+
+  tasks:
+    - name: create file structure
+      ansible.builtin.file:
+        path: "{{ confd_path }}"
+        state: directory
+
+    - name: create base config
+      ansible.builtin.template: 
+        src: ./templates/base_config.j2
+        dest: "{{ confd_path }}/base_config"
+
+    - name: processor cores debug
+      ansible.builtin.debug: 
+        msg: "{{ ansible_processor_cores == 8}}"
+
+    - name: upload config if it's used one thread
+      ansible.builtin.copy:
+        src: templates/one_core_config.j2 
+        dest: "{{ confd_path }}/one_core_config" 
+      when: "ansible_processor_cores == 1"    
+    - name: assemble config
+      ansible.builtin.assemble: 
+        src: "{{ confd_path }}"
+        dest: "{{ base_config_path }}"
+    - name: Retrieve file system status
+      stat:
+        path: "{{ item }}"
+        get_md5: false
+        get_checksum: false
+        get_attributes: false
+        get_mime: false
+      with_items:
+        - "{{ confd_path }}"
+        - "{{ confd_path }}/base_config"
+        - "{{ base_config_path }}"
+      register: results
+
+    - name: Check all files and dirs exists
+      fail:
+        msg: "Expected {{ item.item }} to be exists"
+      when: not item.stat.exists
+      with_items: "{{ results.results }}"
+
+    - name: Check configs
+      lineinfile:
+        dest: "{{ base_config_path }}"
+        line: "{{item}}"
+      check_mode: yes
+      register: presence
+      failed_when: presence.changed
+      with_items:
+        - "CPU_NUMBERS={{ ansible_processor_cores }}"
+        - "HOSTNAME={{ ansible_hostname }}"
+        - "IP_ADDRESS={{ ansible_all_ipv4_addresses[0] }}"
+
+    - name: Check configs for one core machine
+      lineinfile:
+        dest: "{{ base_config_path }}"
+        line: "{{item}}"
+      check_mode: yes
+      register: presence
+      failed_when: presence.changed
+      with_items:
+        - USE_THREADS=0
+      when: ansible_processor_cores == 1

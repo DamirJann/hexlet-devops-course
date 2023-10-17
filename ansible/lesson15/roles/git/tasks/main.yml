@@ -1,0 +1,6 @@
+---
+# tasks file for git
+- name: set up server
+  ansible.builtin.include_tasks:
+    file: "../tasks/{{ item }}" 
+  loop: "{{ playbook_paths }}"

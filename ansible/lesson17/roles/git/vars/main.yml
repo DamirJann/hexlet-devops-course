@@ -1,0 +1,3 @@
+---
+# vars file for git
+playbook_paths: ["user_playbook.yaml", "git_playbook.yaml"]
