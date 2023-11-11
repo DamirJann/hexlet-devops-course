@@ -1,0 +1,18 @@
+- hosts: webservers
+  gather_facts: no
+  tasks: 
+    - name: copy hello service unit
+      remote_user: root
+      ansible.builtin.template: 
+        src: "templates/hello.service"
+        dest: "/lib/systemd/system"
+        mode: "644"
+
+    - name: enable hello service
+      ansible.builtin.systemd_service:
+        name: hello.service
+        enabled: true
+    - name: restart system
+      remote_user: root
+      ansible.builtin.shell: 
+        cmd: "systemctl reboot" 
