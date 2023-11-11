@@ -10,6 +10,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: git submodule update
+      - run: ls -l "$PROJ_PATH"
       - run: make -C "$PROJ_PATH" setup
       - run: make -C "$PROJ_PATH" test
   lint:
