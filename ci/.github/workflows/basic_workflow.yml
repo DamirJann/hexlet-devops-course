@@ -1,0 +1,8 @@
+name: 
+on: push
+jobs: 
+  hello-world:
+    runs-on: ubuntu-latest
+    steps: 
+      - uses: actions/checkout@v4
+      - run: make hello-say
