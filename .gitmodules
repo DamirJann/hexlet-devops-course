@@ -1,3 +1,3 @@
-[submodule "ci/lesson3/hexlet-ci-app"]
-	path = ci/lesson3/hexlet-ci-app
+[submodule "ci/lesson34/hexlet-ci-app"]
+	path = ci/lesson34/hexlet-ci-app
 	url = https://github.com/hexlet-components/hexlet-ci-app
