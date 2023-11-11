@@ -10,13 +10,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - run: make -C "$PROJ_PATH" install
+      - run: make -C "$PROJ_PATH" setup
       - run: make -C "$PROJ_PATH" test
   lint:
     runs-on: ubuntu-latest
     steps: 
       - uses: actions/checkout@v4
-      - run: make -C "$PROJ_PATH" install
+      - run: make -C "$PROJ_PATH" setup
       - run: make -C "$PROJ_PATH" lint
   start:
     runs-on: ubuntu-latest
