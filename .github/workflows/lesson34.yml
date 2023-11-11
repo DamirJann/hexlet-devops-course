@@ -1,0 +1,47 @@
+name: lesson3
+on: push
+
+env:
+  PROJ_PATH: ci/lesson34/hexlet-ci-app
+
+jobs: 
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+      - run: make -C "$PROJ_PATH" setup
+      - run: make -C "$PROJ_PATH" test
+  lint:
+    runs-on: ubuntu-latest
+    steps: 
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+      - run: git submodule update
+      - run: make -C "$PROJ_PATH" setup
+      - run: make -C "$PROJ_PATH" lint
+  vulnerability_check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - name: Run Snyk to check for vulnerabilities
+        uses: snyk/actions/node@master
+        env: 
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          args: --severity-threshold=high
+  start:
+    runs-on: ubuntu-latest
+    needs: ["test", "lint"]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+      - run: git submodule update
+      - run: make -C "$PROJ_PATH" setup  
+      - run: make -C "$PROJ_PATH" start
+
+ 
+  
