@@ -29,8 +29,7 @@ jobs:
         with:
           submodules: recursive
       - run: make -C "$PROJ_PATH" setup    
-      - run: ls -a "$PROJ_PATH"
-      - run: ls -a
+      - run: cd "$PROJ_PATH"
       - name: Run Snyk to check for vulnerabilities
         uses: snyk/actions/node@master
         env: 
