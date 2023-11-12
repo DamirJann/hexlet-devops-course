@@ -31,7 +31,7 @@ jobs:
         env: 
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
-          args: --path="$PROJ_PATH"
+          args: --packages-folder="$PROJ_PATH"
   start:
     runs-on: ubuntu-latest
     needs: ["test", "lint", "security"]
