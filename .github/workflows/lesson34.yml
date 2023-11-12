@@ -22,7 +22,7 @@ jobs:
       - run: git submodule update
       - run: make -C "$PROJ_PATH" setup
       - run: make -C "$PROJ_PATH" lint
-  serurity:
+  security:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
