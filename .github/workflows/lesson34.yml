@@ -35,7 +35,7 @@ jobs:
         env: 
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
-          command: test --packages-folder="$PROJ_PATH"
+          command: test --packages-folder="ci/lesson34/hexlet-ci-app"
   start:
     runs-on: ubuntu-latest
     needs: ["test", "lint", "security"]
