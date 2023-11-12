@@ -31,7 +31,7 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           cache: "npm"
-          cache-dependency-path: "$PROJ_PATH"
+          cache-dependency-path: ci/lesson34/hexlet-ci-app
       - name: Run Snyk to check for vulnerabilities
         uses: snyk/actions/node@master
         env: 
