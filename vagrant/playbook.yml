@@ -1,8 +1,0 @@
-- hosts: all
-  tasks:
-    - name: install dependencies
-      become: true 
-      ansible.builtin.apt:
-        name: "{{ item }}"
-        update_cache: true  
-      loop: ["nodejs", "npm", "postgresql"]
