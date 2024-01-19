@@ -1,4 +1,0 @@
-Serving HTTP on 127.0.0.1 port 8000 (http://127.0.0.1:8000/) ...
-127.0.0.1 - - [18/Oct/2023 21:26:38] "GET / HTTP/1.1" 200 -
-
-Keyboard interrupt received, exiting.
